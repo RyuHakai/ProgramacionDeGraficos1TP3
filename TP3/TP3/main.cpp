@@ -6,7 +6,10 @@
 int main(int argc, char **argv) {
 
 	ALLEGRO_DISPLAY *display = NULL;
-	ALLEGRO_BITMAP  *image = NULL;
+	ALLEGRO_BITMAP  *bloque = NULL;
+	ALLEGRO_BITMAP  *player = NULL;
+
+
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
@@ -24,9 +27,18 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	image = al_load_bitmap("image.jpg");
+	bloque = al_load_bitmap("bloque.jpg");
 
-	if (!image) {
+	if (!bloque) {
+		al_show_native_message_box(display, "Error", "Error", "Failed to load image!",
+			NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		al_destroy_display(display);
+		return 0;
+	}
+
+	player = al_load_bitmap("player.jpg");
+
+	if (!player) {
 		al_show_native_message_box(display, "Error", "Error", "Failed to load image!",
 			NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		al_destroy_display(display);
@@ -35,7 +47,8 @@ int main(int argc, char **argv) {
 
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
-	al_draw_bitmap(image, 40, 60, 0);
+	al_draw_bitmap(bloque, 700, 60, 0);
+	al_draw_bitmap(player, 200, 60, 0);
 
 	al_flip_display();
 
@@ -43,7 +56,8 @@ int main(int argc, char **argv) {
 
 	al_destroy_display(display);
 
-	al_destroy_bitmap(image);
+	al_destroy_bitmap(bloque);
+	al_destroy_bitmap(player);
 
 	return 0;
 }
