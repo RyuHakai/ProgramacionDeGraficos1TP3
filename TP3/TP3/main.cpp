@@ -7,6 +7,7 @@ const float FPS = 60;
 const int SCREEN_W = 640;
 const int SCREEN_H = 480;
 const int BOUNCER_SIZE = 32;
+const int HALF = 16;
 enum MYKEYS {
 	KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT
 };
@@ -18,8 +19,13 @@ int main(int argc, char **argv)
 	ALLEGRO_TIMER *timer = NULL;
 	ALLEGRO_BITMAP  *bloque = NULL;
 	ALLEGRO_BITMAP  *player = NULL;
-	float player_x = SCREEN_W / 2.0 - BOUNCER_SIZE / 2.0;
-	float player_y = SCREEN_H / 2.0 - BOUNCER_SIZE / 2.0;
+	float player_x = SCREEN_W *0.5 - BOUNCER_SIZE *0.5;
+	float player_y = SCREEN_H *0.5 - BOUNCER_SIZE *0.5;
+	float bloque_x = SCREEN_W * 0.25 - BOUNCER_SIZE *0.5;
+	float bloque_y = SCREEN_H * 0.25 - BOUNCER_SIZE *0.5;
+	int vidas = 3;
+	bool patrulla_x = true;
+	bool bloque_vivo = true;
 	bool key[4] = { false, false, false, false };
 	bool redraw = true;
 	bool doexit = false;
@@ -82,6 +88,7 @@ int main(int argc, char **argv)
 	if (!event_queue) {
 		fprintf(stderr, "failed to create event_queue!\n");
 		al_destroy_bitmap(player);
+		al_destroy_bitmap(bloque);
 		al_destroy_display(display);
 		al_destroy_timer(timer);
 		return -1;
@@ -120,7 +127,19 @@ int main(int argc, char **argv)
 			if (key[KEY_RIGHT] && player_x <= SCREEN_W - BOUNCER_SIZE - 4.0) {
 				player_x += 4.0;
 			}
-
+			if (patrulla_x) {
+				bloque_x += 2;
+				if (bloque_x >= 480)
+				patrulla_x = false;
+			}
+			if (!patrulla_x) {
+				bloque_x -= 2;
+				if (bloque_x <= 160)
+					patrulla_x = true;
+			}
+			if (player_x > bloque_x - HALF && player_x < bloque_x + HALF)
+				if (player_y > bloque_y - HALF && player_y < bloque_y + HALF)
+					doexit = true;
 			redraw = true;
 		}
 		else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
@@ -175,12 +194,14 @@ int main(int argc, char **argv)
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 
 			al_draw_bitmap(player, player_x, player_y, 0);
+			al_draw_bitmap(bloque, bloque_x, bloque_y, 0);
 
 			al_flip_display();
 		}
 	}
 
 	al_destroy_bitmap(player);
+	al_destroy_bitmap(bloque);
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_event_queue(event_queue);

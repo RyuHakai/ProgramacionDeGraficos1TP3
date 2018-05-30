@@ -1,0 +1,5 @@
+*El juego posee un personaje que se mueve de manera fluida.
+
+-No existe un enemigo o obstaculo.
+-No hay coliciones ni condicion de derrota.
+-El relase esta mal configurado.
