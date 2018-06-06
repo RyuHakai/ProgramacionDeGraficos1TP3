@@ -88,7 +88,7 @@
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)allegro_dependencies_x86\lib;$(SolutionDir)allegro_5.1.12_x86\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>allegro.lib;allegro_dialog-debug.lib;allegro_image-debug.lib;allegro_acodec-debug.lib;allegro_audio-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>allegro-debug.lib;allegro_dialog-debug.lib;allegro_image-debug.lib;allegro_acodec-debug.lib;allegro_audio-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>

@@ -65,7 +65,7 @@ int main(int argc, char **argv)
 	bool start_live = true;
 	int start_cont = 0;
 	bool end_live = false;
-
+//checkeos-----------------------------------------------------------------------
 	if (!al_init()) {
 		fprintf(stderr, "failed to initialize allegro!\n");
 		return -1;
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
 			NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return 0;
 	}
-
+//audio---------------------------------------------------------------------------
 	/*	if (!al_install_audio()) {
 	fprintf(stderr, "failed to initialize audio!\n");
 	return -1;
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
 	return -1;
 	}*/
 
-
+//carga--------------------------------------------------------------------------
 	bloque = al_load_bitmap("bloque.jpg");
 
 	if (!bloque) {
